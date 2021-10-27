@@ -1,12 +1,20 @@
 {
   "name": "graphql-entities",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repositiory": {
+    "type": "git",
+    "url": "https://github.com/RobertSandiford/graphql-entities"
+  },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Robert Sandiford",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^3.4.0",
+    "graphql-request": "^3.6.1"
+  }
 }
