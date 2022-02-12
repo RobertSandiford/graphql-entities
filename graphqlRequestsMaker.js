@@ -33,7 +33,7 @@ function parseTypeToRequest(typesRegistry, type) {
 
 function generateFunction(requests, objects, type, name, format) {
     
-    const r = async (input, requestedData = '') => {
+    const r = async (input, requestedData = '', explain = false) => {
         
         input = formatInputData(input)
         //requestedData = formatInputData(requestedData)
@@ -52,14 +52,23 @@ function generateFunction(requests, objects, type, name, format) {
             }
         }
 
+        const args = (input) ? `(${input})` : ''
+
         const query = gql`${type} {
-            ${name}(${input}) ${requestedData}
+            ${name} ${args} ${requestedData}
         }`
         
-        //console.log('getHolding auto query', query)
+        if (explain) console.log('graphql-entities generated query: ', query)
 
-        const response = await requests.graphQlRequest(query)
-        return response[name]
+        if ( ! 'graphQlRequest' in requests ) { 
+            throw 'graphql-entities requests error - no graphQlRequest function - use requests.configure(url)'
+        }
+        try {
+            const response = await requests.graphQlRequest(query)
+            return response[name]
+        } catch (e) {
+            console.log("graphql-entities request error", e)
+        }
     }
 
     return r
